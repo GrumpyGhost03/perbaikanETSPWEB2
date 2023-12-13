@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>pokemon API</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
+    <style>
+        .btn-detail {
+            font-size: large;
+            font-display: block;
+            text-align: center;
+            background-color: #0550ff;
+            color: white;
+        }
+
+        .card {
+            outline: #0550ff solid 1px;
+            border-radius: 10px;
+        }
+
+        .col-md-3 {
+            padding: 0 10px;
+            width: 3;
+            
+        }
+
+        .container {
+            max-width: 1500px;
+        }
+
+        
+    </style>
+</head>
+<body>
+
+    <div class ="container mt-2">
+        <div class = "row" id = "pokemon-list">
+        </div>
+    </div>
+
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+
+        const apiurl = 'https://pokeapi.co/api/v2/pokemon/'
+
+        fetch(apiurl)
+        .then(response => response.json())
+        .then(data => {
+            const pokemonName = data.results;
+            const pokemonList = document.getElementById('pokemon-list');
+            const pokemonListUrl = document.getElementById('pokemon-list-url');
+
+            pokemonName.forEach(pokemon => {
+                const postdiv = document.createElement('div');
+                postdiv.className = 'col-md-3 mb-4';
+                postdiv.innerHTML = `<div class = "card">
+                <div class = "card-body mx-auto">
+                <h5 class = "card-title mx-auto">${pokemon.name}</h5>
+                <a href="${pokemon.url}"  class = "btn  btn-detail mx-auto">Detail</a>
+                    </div>
+                        </div>`;
+                pokemonList.appendChild(postdiv);});
+                
+            })
+            .catch(error => console.error('Error fetching data:', error));
+    </script>
+</body>
+
